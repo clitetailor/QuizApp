@@ -1,0 +1,11 @@
+# modules
+node_modules
+typings
+.meteor/local
+
+# debug
+npm-debug.*
+
+# productions
+build
+dist
