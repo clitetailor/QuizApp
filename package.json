@@ -1,26 +1,26 @@
 {
-	"name": "quiz-app",
-	"private": true,
-	"scripts": {
-		"start": "meteor run",
-		"update": "meteor update"
-	},
-	"dependencies": {
-		"@angular/common": "^2.4.9",
-		"@angular/compiler": "^2.4.9",
-		"@angular/core": "^2.4.9",
-		"@angular/forms": "^2.4.9",
-		"@angular/platform-browser": "^2.4.9",
-		"@angular/platform-browser-dynamic": "^2.4.9",
-		"@angular/router": "^3.4.9",
-		"angular2-meteor": "^0.7.1",
-		"angular2-meteor-polyfills": "^0.1.1",
-		"babel-runtime": "^6.23.0",
-		"meteor-node-stubs": "~0.2.0",
-		"meteor-rxjs": "^0.4.7",
-		"reflect-metadata": "^0.1.10",
-		"rxjs": "^5.2.0",
-		"underscore": "^1.8.3",
-		"zone.js": "^0.7.7"
-	}
+  "name": "quiz-app",
+  "private": true,
+  "scripts": {
+    "start": "meteor run",
+    "update": "meteor update"
+  },
+  "dependencies": {
+    "@angular/common": "^2.4.9",
+    "@angular/compiler": "^2.4.9",
+    "@angular/core": "^2.4.9",
+    "@angular/forms": "^2.4.9",
+    "@angular/platform-browser": "^2.4.9",
+    "@angular/platform-browser-dynamic": "^2.4.9",
+    "@angular/router": "^3.4.9",
+    "angular2-meteor": "^0.7.1",
+    "angular2-meteor-polyfills": "^0.1.1",
+    "babel-runtime": "^6.23.0",
+    "meteor-node-stubs": "~0.2.0",
+    "meteor-rxjs": "^0.4.7",
+    "reflect-metadata": "^0.1.10",
+    "rxjs": "^5.2.0",
+    "underscore": "^1.8.3",
+    "zone.js": "^0.7.7"
+  }
 }

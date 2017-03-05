@@ -6,11 +6,6 @@ declare module "*.html" {
 }
 
 declare module "*.styl" {
-    let style: string;
-    export default style;
-}
-
-declare module "*.css" {
-    let style: string;
-    export default style;
+    let textContent: string;
+    export { textContent };
 }
