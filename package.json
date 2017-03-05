@@ -2,7 +2,8 @@
 	"name": "quiz-app",
 	"private": true,
 	"scripts": {
-		"start": "meteor run"
+		"start": "meteor run",
+		"update": "meteor update"
 	},
 	"dependencies": {
 		"@angular/common": "^2.4.9",
