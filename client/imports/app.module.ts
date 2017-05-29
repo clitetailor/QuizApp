@@ -19,11 +19,14 @@ import { UserComponent } from './user/user.component';
 import { ReportDetailComponent } from './report-detail/report-detail.component';
 import { ReportEditComponent } from './report-edit/report-edit.component';
 import { ReportAddComponent } from './report-add/report-add.component';
+import { QuizService } from './quiz.service'
+import { TimePipe } from './time.pipe'
+import { TopicPipe } from './topic.pipe'
 
 const appRoutes = [
   { path: '', component: HomePageComponent },
-  { path: 'quiz-info', component: QuizInfoComponent },
-  { path: 'quiz', component: QuizPageComponent },
+  { path: 'quiz-info/:id', component: QuizInfoComponent },
+  { path: 'quiz/:id', component: QuizPageComponent },
   { path: 'editor', component: QuizEditorComponent },
   { path: 'result', component: QuizResultComponent },
   { path: 'report', component: ReportManagerComponent },
@@ -50,7 +53,9 @@ const appRoutes = [
     ReportDetailComponent,
     ReportEditComponent,
     ReportAddComponent,
-    UserComponent
+    UserComponent,
+	TimePipe,
+	TopicPipe
   ],
   imports: [
     BrowserModule,
@@ -59,7 +64,7 @@ const appRoutes = [
     RouterModule.forRoot(appRoutes),
     MaterialModule.forRoot()
   ],
-  providers: [ReportService],
+  providers: [ReportService, QuizService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

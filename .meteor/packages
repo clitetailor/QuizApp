@@ -17,9 +17,9 @@ es5-shim@4.6.15                # ECMAScript 5 compatibility for older browsers.
 ecmascript              # Enable ECMAScript2015+ syntax in app code
 shell-server@0.2.1            # Server-side component of the `meteor shell` command
 
-stylus
 barbatus:typescript
 angular2-compilers
 tmeasday:publish-counts
 accounts-password
 alanning:roles
+stylus

@@ -1,42 +1,38 @@
-<div class="outer-wrapper">
-  <div class="cover">
-    <nav>
-      <a href="">Login</a>
-      <a href="">Signup</a>
-    </nav>
+<div class="home-page-outer-wrapper">
+	<div class="cover">
+		<nav>
+			<a href="">Login</a>
+			<a href="">Signup</a>
+		</nav>
 
-    <h1>Quiz App</h1>
-    <input type="text" class="search-box" placeholder="Search ...">
-  </div>
+		<h1>Quiz App</h1>
+		<input type="text" class="search-box" placeholder="Search ...">
+	</div>
 
-  <div class="content">
-    <nav class="tabs">
-      <div
-      class="tab"
-      *ngFor="let tab of tabs; let i = index"
-      [class.active]="i === activeTab"
-      (click)="switchTab(i)">
-        <a>{{tab}}</a>
-      </div>
-    </nav>
+	<div class="content">
+		<nav class="tabs">
+			<div class="tab" [class.active]="activeTab === 0" (click)="switchTab(0, null)">
+				<a>All</a>
+			</div>
+			<div class="tab" *ngFor="let tab of tabs; let i = index" [class.active]="i + 1 === activeTab" (click)="switchTab(i + 1, tab)">
+				<a>{{tab}}</a>
+			</div>
+		</nav>
 
-    <div class="quiz-list">
-      <div
-      class="quiz"
-      *ngFor="let quiz of quizzes; let i = index"
-      [style.animation-delay.s]="i * 0.2 + 1">
-        <div class="line">
-          <h3 class="title">Quiz about chemistry</h3>
-        </div>
+		<div class="quiz-list">
+			<div class="quiz" *ngFor="let quiz of quizPackets | topicPipe: topic; let i = index" [style.animation-delay.s]="i * 0.2 + 1">
+				<div class="line">
+					<h3 class="title">{{quiz.title}}</h3>
+				</div>
 
-        <div class="line margin-bottom">
-          <b>Time: </b> &nbsp;5 min
-        </div>
+				<div class="line margin-bottom">
+					<b>Time: </b> &nbsp; {{quiz.duration}}
+				</div>
 
-        <div class="line align-right">
-          <button md-raised-button color="primary">Start</button>
-        </div>
-      </div>
-    </div>
-  </div>
+				<div class="line align-right">
+					<button md-raised-button color="primary" (click)="start(quiz)">Start</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

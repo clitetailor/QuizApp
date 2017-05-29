@@ -6,11 +6,16 @@ interface Options {
 	[key: string]: any;
 }
 
+Meteor.publish('topics', function () {
+	return QuizPackets.find({}).map(quizzes => quizzes.map(quiz => quiz.topic))
+})
+
 // Find quiz packets by topic
 Meteor.publish('all-quiz-packets', function (options: Options, topic?: string) {
 	const selector = buildQuery.call(this, null, topic);
 
 	Counts.publish(this, 'quiz-packet-count', QuizPackets.collection.find(selector), { noReady: true });
+
 	return QuizPackets.find(selector, options);
 })
 

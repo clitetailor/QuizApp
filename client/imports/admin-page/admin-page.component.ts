@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import template from './quiz-editor.component.html'
-import { textContent } from './quiz-editor.component.styl'
+import template from './admin-page.component.html'
+import { textContent } from './admin-page.component.styl'
 
 @Component({
   selector: 'app-admin-page',

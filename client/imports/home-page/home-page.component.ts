@@ -1,47 +1,65 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
+import { Meteor } from 'meteor/meteor'
 import template from './home-page.component.html';
-import * as styles from './home-page.component.styl';
+import { textContent } from './home-page.component.styl';
+import { QuizPackets } from '../../../both/collections/quizzes.collection'
+import { QuizPacket } from '../../../both/models/quiz.model'
+import { Subscription, Observable } from 'rxjs'
+import { MeteorObservable } from 'meteor-rxjs'
+import { QuizService } from '../quiz.service'
+
+interface Options {
+	[key: string]: any
+}
 
 @Component({
-  selector: 'app-home-page',
-  template: template,
-  styles: [styles.textContent]
+	selector: 'app-home-page',
+	template: template,
+	styles: [textContent]
 })
-export class HomePageComponent implements OnInit {
+export class HomePageComponent implements OnInit, OnDestroy {
 
-  constructor() { }
+	constructor(private router: Router) { }
 
-  ngOnInit() {
-  }
+	quizPackets$;
+	quizPacketsSub;
+	quizPackets;
+	tabs;
 
-  tabs = [
-    "Lastest",
-    "Trend",
-    "Math",
-    "Chemistry"
-  ]
+	tabs$;
+	tabsSub;
 
-  activeTab = 0;
+	topic = '';
 
-  quizzes = [{
+	ngOnInit() {
+		this.quizPackets$ = QuizPackets.find({}).zone().subscribe(packets => {
+			this.quizPackets = packets;
+		})
+		this.tabs$ = QuizPackets.find({})
+			.zone()
+			.map(packets => packets.map(quiz => quiz.topic))
+			.subscribe(tabs => {
+				this.tabs = tabs;
+			})
+		this.quizPacketsSub = MeteorObservable.subscribe('all-quiz-packets').subscribe();
+	}
 
-  }, {
+	ngOnDestroy() {
+		this.quizPacketsSub.unsubscribe();
+	}
 
-  }, {
 
-  }, {
+	activeTab = 0;
 
-  }, {
+	switchTab(i, tab) {
+		if (this.activeTab !== i) {
+			this.activeTab = i;
+			this.topic = tab;
+		}
+	}
 
-  }, {
-
-  }, {
-
-  }]
-
-  switchTab(i) {
-    if (this.activeTab !== i) {
-      this.activeTab = i;
-    }
-  }
+	start(quiz) {
+		this.router.navigate([`quiz-info/${quiz._id}`])
+	}
 }

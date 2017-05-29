@@ -9,7 +9,6 @@ export interface QuizPacket extends CollectionObject{
     numberOfVotes: number,
     title: string
     author?: string
-    
 }
 
 interface Question extends CollectionObject{
