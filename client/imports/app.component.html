@@ -1,9 +1,8 @@
-<h1>Hello World!</h1>
 <li *ngFor="let user of listusers | async" class="list-group-item "> 
-            <div class="row">
-                <div class="col-sm-8">
-                    <p >{{user.username}}</p>
-                    <p >{{user.createdAt}}</p>
-                </div>
-                            </div>
-        </li>
+	<div class="row">
+		<div class="col-sm-8">
+			<p >{{user.username}}</p>
+			<p >{{user.createdAt}}</p>
+		</div>
+	</div>
+</li>

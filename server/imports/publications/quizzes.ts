@@ -6,85 +6,80 @@ interface Options {
 	[key: string]: any;
 }
 
-/**
- * quiz for all users queried linhvuc
- **/
-Meteor.publish('All-quizpackets', function (options: Options, linhVuc?: string) {
-	const selector = buildQuery.call(this, null, linhVuc);
-	Counts.publish(this, 'All-soGoiCauHoi', QuizPackets.collection.find(selector), { noReady: true });
+// Find quiz packets by topic
+Meteor.publish('all-quiz-packets', function (options: Options, topic?: string) {
+	const selector = buildQuery.call(this, null, topic);
+
+	Counts.publish(this, 'quiz-packet-count', QuizPackets.collection.find(selector), { noReady: true });
 	return QuizPackets.find(selector, options);
 })
 
-/**
- * quiz for its owner queried linhvuc
- **/
-Meteor.publish('His-quizpackets', function (options: Options, linhVuc?: string) {
-	const selector = buildOwnerQuery.call(this, null, linhVuc);
-	Counts.publish(this, 'His-soGoiCauHoi', QuizPackets.collection.find(selector), { noReady: true });
+
+// Find owner's packets
+Meteor.publish('owner-packets', function (options: Options, topic?: string) {
+	const selector = buildOwnerQuery.call(this, null, topic);
+
+	Counts.publish(this, 'owner-packet-count', QuizPackets.collection.find(selector), { noReady: true });
 	return QuizPackets.find(selector, options);
 })
 
-/**
- * quiz for 1 goi cau hoi
- **/
-Meteor.publish('quizpacket-public', function (quizPacketId: string) {
+
+// Get public packet by id
+Meteor.publish('quiz-packet', function (quizPacketId: string) {
 	return QuizPackets.find(buildQuery.call(this, quizPacketId));
 })
-Meteor.publish('quizpacket-owner', function (quizPacketId: string) {
+
+
+// Get owner's packet by id
+Meteor.publish('owner-packet', function (quizPacketId: string) {
 	return QuizPackets.find(buildOwnerQuery.call(this, quizPacketId));
 })
 
-/**
- * function for all users
- **/
-function buildQuery(goiCauHoiId?: string, linhVuc?: string): Object {
-	if (goiCauHoiId) {
+function buildQuery(packetId?: string, topic?: string): Object {
+	if (packetId) {
 		return {
-			GoiID: goiCauHoiId
+			_id: packetId
 		}
 	}
 
-	const searchRegEx = { '$regex': '.*' + (linhVuc || '') + '.*', '$options': 'i' };
+	const searchRegEx = { '$regex': '.*' + (topic || '') + '.*', '$options': 'i' };
+
 	return {
-		'LinhVuc': searchRegEx
+		'topic': searchRegEx
 	}
 }
 
-/**
- * function for owners
- **/
-function buildOwnerQuery(goiCauHoiId?: string, linhVuc?: string): Object {
+function buildOwnerQuery(packetId?: string, topic?: string): Object {
 	const isOwner = {
 		$and: [
 			{
-				TacGia: this.userId
+				author: this.userId
 			},
 			{
-				TacGia: {
+				author: {
 					$exists: true
 				}
 			}
 		]
 	}
 
-	if (goiCauHoiId) {
+	if (packetId) {
 		return {
 			$and: [
 				{
-					GoiID: goiCauHoiId
+					_id: packetId
 				},
 				isOwner
 			]
 		};
-
 	}
 
-	const searchRegEx = { '$regex': '.*' + (linhVuc || '') + '.*', '$options': 'i' };
+	const searchRegEx = { '$regex': '.*' + (topic || '') + '.*', '$options': 'i' };
 
 	return {
 		$and: [
 			{
-				'LinhVuc': searchRegEx
+				'topic': searchRegEx
 			},
 			isOwner
 		]

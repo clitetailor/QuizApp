@@ -1,25 +1,25 @@
 import { CollectionObject } from './collection-object.model';
 
 export interface QuizPacket extends CollectionObject{
-    Quizzes: Quiz[],
-    LinhVuc: string,
-    ThoiGianTao: Date,
-    ThoiGianTraLoi: number,
-    SoLuotView: number,
-    SoLuotVote: number,
-    TieuDe: string
-    TacGia?: string
+    questions: Question[],
+    topic: string,
+    time: Date,
+    duration: number,
+    numberOfViews: number,
+    numberOfVotes: number,
+    title: string
+    author?: string
     
 }
 
-interface Quiz extends CollectionObject{
-    CauHoi: string,
-    Answers: DapAn[],
-    SoNguoiTraLoi: number
+interface Question extends CollectionObject{
+    content: string,
+    answers: Answer[],
+	numberOfRespondents: number
 }
 
-interface DapAn extends CollectionObject{
-    DapAn: string,
-    True: boolean,
-    SoNguoiChon: number,
+interface Answer extends CollectionObject{
+    content: string,
+	correct: boolean,
+    numberOfClicks: number
 }
