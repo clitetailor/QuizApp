@@ -1,0 +1,140 @@
+@keyframes fade-in
+  from
+    transform translateY(-30px)
+    opacity 0
+
+  to
+    transform 0
+    opacity 1
+
+@keyframes fade-in-right
+  from
+    transform translateX(30px)
+    opacity 0
+
+  to
+    transform 0
+    opacity 1
+
+.outer-wrapper
+  margin 0
+  padding 0
+
+  width 100%
+  height 100%
+
+  overflow-y auto
+
+  &::-webkit-scrollbar-track
+    background alpha(#000, 0.1)
+
+
+  &::-webkit-scrollbar-thumb
+    background #aaa
+
+  .cover
+    display flex
+    flex-flow column nowrap
+    justify-content center
+    align-items center
+
+    position relative
+
+    background linear-gradient(45deg, dodgerblue, purple)
+    background-attachment fixed
+
+    height 300px
+
+    nav
+      display flex
+      align-items center
+      justify-content flex-end
+
+      padding 0 20px
+
+      position absolute
+      top 0
+      left 0
+      right 0
+
+      height 60px
+
+      a
+        margin 0 20px
+
+        color white
+        font-family "Lato Medium"
+        font-size 14px
+
+    h1
+      margin-top 0px
+
+      color white
+      font-family "Lato Medium"
+      font-size 48px
+
+      animation fade-in 1s
+
+    .search-box
+      padding 10px 24px
+      width 600px
+
+      background white
+      border none
+
+      border-radius 3px
+
+      font-family Arial, Helvetica, sans-serif
+      font-size 20px
+
+      animation fade-in 1s 0.5s
+      animation-fill-mode backwards
+
+  .content
+    .tabs
+      display flex
+      justify-content center
+      align-items stretch
+
+      height 60px
+      user-select none
+
+      .tab
+        display flex
+        justify-content center
+        align-items center
+
+        padding 0 30px
+
+        font-family "Lato Medium"
+
+        cursor pointer
+        border-bottom 3px solid transparent
+
+      .tab.active
+        border-bottom 3px solid dodgerblue
+        box-shadow 0 3px 0px alpha(dodgerblue, 0.2)
+
+    .quiz-list
+      padding 40px 0 400px 0
+
+      .quiz
+        padding 20px
+        margin 30px auto
+
+        max-width 800px
+
+        box-shadow 0 3px 5px alpha(#000, 0.2)
+
+        animation fade-in-right 0.5s
+        animation-fill-mode backwards
+
+        .line
+          display flex
+          font-family Lato
+
+        .title
+          font-family Lato
+
+        .margin-bottom
+          margin-bottom 15px

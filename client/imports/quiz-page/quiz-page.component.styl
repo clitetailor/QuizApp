@@ -1,0 +1,86 @@
+.margin-bottom
+  margin-bottom 20px
+
+.line, .line-group
+  margin-bottom 15px
+
+.line-group
+  .line
+    margin-bottom 8px
+
+.line.align-right
+  display flex
+  justify-content flex-end
+
+.two-column
+  display flex
+
+  .long
+    flex 1 1 auto
+
+  .short
+    flex 0 0 auto
+
+.stretch
+  align-items stretch
+
+.outer-wrapper
+  position relative
+  width 100%
+  height 100%
+
+  margin 0
+  padding 20px
+
+  overflow-y auto
+  overflow-x hidden
+
+  background cadetblue
+
+  .timer
+    position absolute
+    padding 8px
+
+    font-family Lato
+
+    border-radius 3px
+    background white
+
+  .paper
+    margin 0 auto
+
+    max-width 800px
+
+    background white
+    border-radius 3px
+
+    .piece
+      display block
+      padding 20px
+
+      border 2px solid transparent
+
+      border-radius 3px
+
+      .text
+        padding 10px 15px
+        background #eee
+        min-height 30px
+
+        font-family Arial, Helvetica, sans-serif
+        font-size 14px
+
+      .answer-line
+        cursor pointer
+
+        .label
+          background #ddd
+
+        &:hover
+          .label
+            color white
+            background-color orange
+
+        .selected
+          color white
+          background yellowgreen

@@ -1,7 +1,6 @@
 /// <reference path="./index.d.ts" />
 /// <reference path="../server/index.d.ts" />
 
-
 import "angular2-meteor-polyfills"
 import { Meteor } from 'meteor/meteor'
 import { platformBrowserDynamic } from "@angular/platform-browser-dynamic"

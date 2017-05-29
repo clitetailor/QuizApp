@@ -1,0 +1,41 @@
+<div class="outer-wrapper">
+
+    <div class="members">
+        <h2>Members:</h2>
+        <div class="member" *ngFor="let member of members">
+            <div class="line">
+                <h4>Id: {{member.id}}</h4>
+            </div>
+
+            <div class="line">
+                name: {{member.name}}
+            </div>
+
+            <div class="line">
+                <!-- Ví dụ chúng ta có nút thêm editor ở đây -->
+
+                <!-- Giờ chúng ta sẽ implement chức năng thêm editor vào đây -->
+                <button md-raised-button color="warn" (click)="addEditor(member)">Add Editor</button>
+                <button md-raised-button color="warn" (click)="removeMember(member)">Remove Member</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Giả sử mình tạo thêm danh sách các editors ở dưới này -->
+
+    <div class="editors">
+        <h2>Editors:</h2>
+        <div class="editor" *ngFor="let editor of editors">
+            <div class="line">
+                <h3>{{editor}}</h3>
+            </div>
+
+
+            <!-- Giờ mình implement chức năng remove editor trước -->
+            <div class="line">
+                <button md-raised-button color="warn" (click)="removeEditor(editor)">Remove</button>
+
+            </div>
+        </div>
+    </div>
+</div>

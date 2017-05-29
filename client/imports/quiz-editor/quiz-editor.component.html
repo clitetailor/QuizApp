@@ -1,0 +1,72 @@
+<div class="outer-wrapper">
+  <div class="display">
+    <div class="paper">
+            <div class="piece" *ngFor="let question of questions; let i = index" (click)="chooseQuestion(i)">
+              <div class="line">
+                <h3 class="title">Question</h3>
+              </div>
+
+              <div class="line">
+                <div class="text question-text">
+                  {{question.content}}
+                </div>
+              </div>
+
+              <div class="line">
+                <h3 class="title">Answers</h3>
+              </div>
+
+              <div class="line" *ngFor="let answer of question.answers">
+                <div class="text answer-text" [class.correct]="answer.correct">
+                  {{answer.content}}
+                </div>
+              </div>
+
+              <div class="line">
+                <button md-raised-button color="warn" (click)="removeQuestion(i)">Delete</button>
+              </div>
+            </div>
+    </div>
+  </div>
+
+  <div class="editor">
+          <div class="margin-bottom">
+            <div class="line">
+              <h3 class="title">Question</h3>
+            </div>
+
+            <div class="line">
+              <textarea name="question" id="" cols="30" rows="8" class="question-input" [(ngModel)]="curQuestion.content"></textarea>
+            </div>
+
+            <div class="line">
+              <div class="input"></div>
+            </div>
+          </div>
+
+          <div class="margin-bottom">
+            <div class="line">
+              <h3 class="title">Answers</h3>
+            </div>
+
+            <div class="line-group" *ngFor="let answer of curQuestion.answers; let i = index">
+              <div class="line align-right">
+                <div class="tag" [class.correct]="answer.correct" (click)="toggleAnswer(i)">{{answer.correct ? "true" : "false"}}</div>
+                <div class="tag" (click)="removeAnswer(i)">delete</div>
+              </div>
+              <textarea name="question" id="" cols="30" rows="1" class="answer-input" [class.correct]="answer.correct" [(ngModel)]="answer.content"></textarea>
+            </div>
+
+            <div class="line two-column">
+              <div class="column-left">
+                <button md-raised-button color="warn" (click)="addQuestion()">New Question</button>
+                <button md-raised-button color="warn" (click)="addAnswer()">Add Answer</button>
+              </div>
+
+              <div class="column-right">
+                <button md-raised-button="" color="warn" (click)="done()">Done</button>
+              </div>
+            </div>
+          </div>
+  </div>
+</div>

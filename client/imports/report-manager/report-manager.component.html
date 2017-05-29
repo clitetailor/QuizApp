@@ -1,0 +1,37 @@
+<div class="outer-wrapper">
+  <div class="row">
+    <div class="col-md-12">
+      <div align="right" class="col-md-4">
+        <input type="text" name="keyword" [(ngModel)]="keyword" />
+        <button class="btn btn-info" (click)="Search()">Search</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" align="center">
+    <a [routerLink]="['/report-add']" class="btn btn-success">Add New</a>
+  </div>
+  <table class="table table-bordered">
+    <thead>
+      <tr class="info">
+        <td>Id</td>
+        <td>Name Quize</td>
+        <td>Content Report</td>
+        <td>Show Detail</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let report of reports">
+        <td>{{report.id}}</td>
+        <td>{{report.name_quize}}</td>
+        <td>{{report.content_report}}</td>
+        <td>
+          <a [routerLink]="['/report-detail',report.id]">Show Detail</a>
+          <a [routerLink]="['/report-edit',report.id]" class="btn btn-primary">Edit</a>
+          <button (click)="Delete(report.id)" class="btn btn-danger">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

@@ -1,0 +1,42 @@
+<div class="outer-wrapper">
+  <div class="cover">
+    <nav>
+      <a href="">Login</a>
+      <a href="">Signup</a>
+    </nav>
+
+    <h1>Quiz App</h1>
+    <input type="text" class="search-box" placeholder="Search ...">
+  </div>
+
+  <div class="content">
+    <nav class="tabs">
+      <div
+      class="tab"
+      *ngFor="let tab of tabs; let i = index"
+      [class.active]="i === activeTab"
+      (click)="switchTab(i)">
+        <a>{{tab}}</a>
+      </div>
+    </nav>
+
+    <div class="quiz-list">
+      <div
+      class="quiz"
+      *ngFor="let quiz of quizzes; let i = index"
+      [style.animation-delay.s]="i * 0.2 + 1">
+        <div class="line">
+          <h3 class="title">Quiz about chemistry</h3>
+        </div>
+
+        <div class="line margin-bottom">
+          <b>Time: </b> &nbsp;5 min
+        </div>
+
+        <div class="line align-right">
+          <button md-raised-button color="primary">Start</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

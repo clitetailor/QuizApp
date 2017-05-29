@@ -1,0 +1,43 @@
+<div class="outer-wrapper">
+  <div class="timer">
+    {{timmingHours}}:{{timmingMinutes | number: "2.0-0"}}:{{timmingSeconds | number: "2.0-0"}}
+  </div>
+
+  <div class="paper">
+    <div class="piece" *ngFor="let question of questions; let i = index">
+      <div class="line">
+        <h3 class="title">Question</h3>
+      </div>
+
+      <div class="line">
+        <div class="text">
+          {{question.content}}
+        </div>
+      </div>
+
+      <div class="line">
+        <h3 class="title">Answers</h3>
+      </div>
+
+      <div
+      class="line two-column stretch answer-line"
+      *ngFor="let answer of question.answers; let answerId = index"
+      (click)="chooseAnswer(i, answerId)">
+        <div class="text short label" [class.selected]="answer.checked">
+          {{answerId + 1}}
+        </div>
+        <div class="text long">
+          {{answer.content}}
+        </div>
+      </div>
+    </div>
+
+    <div class="piece">
+      <div class="line align-right">
+        <button md-raised-button color="warn">Submit</button>
+      </div>
+    </div>
+  </div>
+
+
+</div>

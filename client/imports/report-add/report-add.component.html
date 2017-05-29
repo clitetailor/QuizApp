@@ -1,0 +1,14 @@
+<form  class="form" #f="ngForm" (ngSubmit)="SaveForm()">
+  <div class="form-group">
+    <label class="col-md-2">Name Quize</label>
+    <div class="col-md-10"><input type="text" name="name_quize" [(ngModel)]="report.name_quize" /></div>
+  </div>
+  <div class="form-group">
+    <label class="col-md-2">Content Report</label>
+    <div class="col-md-10"><input type="text" name="content_report" [(ngModel)]="report.content_report" /></div>
+  </div>
+  <div class="form-group">
+    <button type="submit">Save</button>
+    <button type="button" (click)="GotoReport()">Cancel</button>
+  </div>
+</form>
