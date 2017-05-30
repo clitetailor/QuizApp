@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import template from './quiz-result.component.html'
+import template from './quiz-result.component.html';
 import { textContent } from './quiz-result.component.styl'
 
 @Component({
@@ -12,6 +12,6 @@ export class QuizResultComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+	
   }
-
 }

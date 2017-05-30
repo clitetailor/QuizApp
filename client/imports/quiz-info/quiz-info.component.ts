@@ -23,7 +23,9 @@ export class QuizInfoComponent implements OnInit, OnDestroy {
 				this.quiz = QuizPackets.findOne({ _id })
 			})
 
-		this.quizSub = MeteorObservable.subscribe('all-quiz-packets').subscribe();
+		this.quizSub = MeteorObservable.subscribe('all-quiz-packets').subscribe(packets => {
+			console.log(packets)
+		});
 	}
 
 	ngOnDestroy() {

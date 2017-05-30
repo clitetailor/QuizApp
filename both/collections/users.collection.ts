@@ -1,10 +1,8 @@
 import { MongoObservable } from 'meteor-rxjs';
 import { Meteor } from 'meteor/meteor';
+import loggedIn from './logged-in'
 
 export const Users = MongoObservable.fromExisting(Meteor.users);
-function loggedIn() {
-  return !!Meteor.user();
-}
 
 Users.allow({
   insert: loggedIn,

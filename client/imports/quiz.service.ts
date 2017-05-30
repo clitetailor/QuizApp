@@ -5,19 +5,22 @@ import { MeteorObservable } from 'meteor-rxjs'
 export class QuizService {
 	constructor() { }
 
-	getTopics() {
-		Meteor.subscribe('topics');
-	}
+	quiz;
+	result = 0;
 
-	getQuizPackets(topic) {
-		Meteor.subscribe('all-quiz-packets', null, topic);
-	}
+	setResult(quiz) {
+		this.quiz = quiz;
 
-	getOwnerPackets(topic?) {
-		Meteor.subscribe('owner-packets', null, topic)
-	}
+		this.result = 0;
 
-	getPacket(packetId) {
-		
+		for (let question of this.quiz.questions) {
+			let correct = question.answers.reduce((pre, cur) => {
+				return pre && (cur.correct === cur.checked)
+			}, true);
+
+			if (correct) {
+				this.result++;
+			}
+		}
 	}
 }

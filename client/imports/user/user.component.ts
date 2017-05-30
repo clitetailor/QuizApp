@@ -1,17 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import template from './user.component.html'
-import * as styles from './user.component.styl'
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-user',
-  template: template,
-  styles: [styles.textContent]
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.styl']
 })
-export class UserComponent implements OnInit {
+export class UserComponent {
 
-  constructor() { }
+  username: string;
+  name:string;
+  password:string;
+  cofpassword:string;
+  email:string;
+  avatar :string;
 
-  ngOnInit() {
+  onSubmit(){
+    if(this.password==this.cofpassword)
+    console.log(this.name,this.username,this.password,this.email,this.avatar);
   }
-  
 }

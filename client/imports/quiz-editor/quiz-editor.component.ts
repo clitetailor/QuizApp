@@ -77,7 +77,6 @@ export class QuizEditorComponent implements OnInit {
   }
 
   done() {
-    // TODO:
-    console.log('done')
+	  
   }
 }
