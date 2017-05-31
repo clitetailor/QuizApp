@@ -11,7 +11,6 @@ interface Options {
 }
 
 
-
 Meteor.publish('topics', function () {
 	return Topics.find({});
 })
@@ -60,8 +59,22 @@ Meteor.publish('submit-results', function (packet) {
 })
 
 
-Meteor.publish('submit-packet', function (packet) {
-	return QuizPackets.insert(packet);
+Meteor.methods({
+	'submit-packet': function(packet) {
+		console.log('ok')
+
+		const newPacket = Object.assign({}, packet, {
+			time: new Date(),
+			numberOfViews: 0,
+			numberOfVotes: 0
+		})
+
+		if (Topics.find({}).fetch().findIndex(topic => topic.title === packet.topic) === -1) {
+			Topics.insert({ title: packet.topic })
+		}
+
+		return QuizPackets.insert(newPacket);
+	}
 })
 
 

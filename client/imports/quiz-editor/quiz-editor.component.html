@@ -32,15 +32,32 @@
 	<div class="editor">
 		<div class="margin-bottom">
 			<div class="line">
+				<h3 class="title">Quiz</h3>
+			</div>
+
+			<div class="line">
+				<label for="title">Title</label>
+				<input class="input" class="question-input" name="title" [(ngModel)]="title">
+			</div>
+
+			<div class="line">
+				<label for="topic">Topic</label>
+				<input class="input" class="question-input" name="topic" [(ngModel)]="topic">
+			</div>
+
+			<div class="line">
+				<label for="duration">Duration</label>
+				<input class="input" class="question-input" name="duration" [(ngModel)]="duration">
+			</div>
+		</div>
+
+		<div class="margin-bottom">
+			<div class="line">
 				<h3 class="title">Question</h3>
 			</div>
 
 			<div class="line">
 				<textarea name="question" id="" cols="30" rows="8" class="question-input" [(ngModel)]="curQuestion.content"></textarea>
-			</div>
-
-			<div class="line">
-				<div class="input"></div>
 			</div>
 		</div>
 

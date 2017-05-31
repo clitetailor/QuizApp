@@ -22,7 +22,7 @@ export class QuizPageComponent implements OnInit {
 		private quizService: QuizService) { }
 
 	quizSub;
-	quiz;
+	quiz: any = {};
 
 	ngOnInit() {
 		this.route.params.map(params => params['id'])

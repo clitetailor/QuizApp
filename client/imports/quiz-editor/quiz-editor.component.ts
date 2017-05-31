@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import template from './quiz-editor.component.html'
 import { textContent } from './quiz-editor.component.styl'
+import { MeteorObservable } from 'meteor-rxjs'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-quiz-editor',
@@ -9,13 +11,17 @@ import { textContent } from './quiz-editor.component.styl'
 })
 export class QuizEditorComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
   curQuestion = this.newQuestion();
-  questions = [this.curQuestion]
+  questions = [this.curQuestion];
+
+	topic = '';
+	title = '';
+	duration = '';
 
   newQuestion() {
     return {
@@ -76,6 +82,13 @@ export class QuizEditorComponent implements OnInit {
   }
 
   done() {
-	  
+	  MeteorObservable.call('submit-packet', {
+			questions: this.questions,
+			topic: this.topic,
+			title: this.title,
+			duration: this.duration
+		}).subscribe(() => {
+			this.router.navigate(['/'])
+		})
   }
 }

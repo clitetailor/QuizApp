@@ -307,12 +307,9 @@ export default function loadQuizzes() {
 
 		quizPackets.forEach((quizpacket: QuizPacket) => QuizPackets.insert(quizpacket))
 		quizPackets.map(packet => packet.topic).forEach((topic: string) => {
-			console.log('1')
 			let records = Topics.find({}).fetch();
-
-			console.log(records);
+			
 			if (records.findIndex(record => record.title === topic) === -1) {
-				console.log('2')
 				Topics.insert({ title: topic })
 			}
 		})

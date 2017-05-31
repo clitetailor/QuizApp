@@ -34,8 +34,7 @@ export class QuizInfoComponent implements OnInit, OnDestroy {
 		this.subscriptions.forEach(unsubscribe)
 	}
 
-	quiz = {};
-	quizSub;
+	quiz: any = {};
 
 	users = [{
 		username: "Clite Tailor",

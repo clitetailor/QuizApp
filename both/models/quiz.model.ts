@@ -8,7 +8,6 @@ export interface QuizPacket extends CollectionObject {
 	numberOfViews: number,
 	numberOfVotes: number,
 	title: string,
-	checked?: boolean,
 	author?: string
 }
 
@@ -21,5 +20,6 @@ interface Question extends CollectionObject {
 interface Answer extends CollectionObject {
 	content: string,
 	correct: boolean,
+	checked?: boolean,
 	numberOfClicks: number
 }
