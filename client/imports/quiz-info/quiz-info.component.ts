@@ -7,6 +7,7 @@ import { QuizPacket } from '../../../both/models/quiz.model'
 import { Subscription, Observable } from 'rxjs'
 import { MeteorObservable } from 'meteor-rxjs'
 import { QuizService } from '../quiz.service'
+import unsubscribe from '../unsubscribe'
 
 @Component({
 	selector: 'app-quiz-info',
@@ -17,19 +18,20 @@ export class QuizInfoComponent implements OnInit, OnDestroy {
 
 	constructor(private route: ActivatedRoute, private router: Router) { }
 
+	subscriptions = []
+
 	ngOnInit() {
-		this.route.params.map(params => params['id'])
-			.subscribe(_id => {
-				this.quiz = QuizPackets.findOne({ _id })
+		this.subscriptions.push(this.route.params.map(params => params['id']).subscribe(_id => {
+			QuizPackets.find({}).zone().subscribe(packets => {
+				this.quiz = packets.find(packet => packet._id === _id)
 			})
 
-		this.quizSub = MeteorObservable.subscribe('all-quiz-packets').subscribe(packets => {
-			console.log(packets)
-		});
+			this.subscriptions.push(MeteorObservable.subscribe('quiz-packet', _id).subscribe())
+		}))
 	}
 
 	ngOnDestroy() {
-		this.quizSub.unsubscribe();
+		this.subscriptions.forEach(unsubscribe)
 	}
 
 	quiz = {};

@@ -5,9 +5,11 @@ import template from './home-page.component.html';
 import { textContent } from './home-page.component.styl';
 import { QuizPackets } from '../../../both/collections/quizzes.collection'
 import { QuizPacket } from '../../../both/models/quiz.model'
+import { Topics } from '../../../both/collections/topics.collection'
 import { Subscription, Observable } from 'rxjs'
 import { MeteorObservable } from 'meteor-rxjs'
 import { QuizService } from '../quiz.service'
+import unsubscribe from '../unsubscribe'
 
 interface Options {
 	[key: string]: any
@@ -22,33 +24,37 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
 	constructor(private router: Router) { }
 
-	quizPackets$;
-	quizPacketsSub;
 	quizPackets;
 	tabs;
-
-	tabs$;
-	tabsSub;
+	
+	subscriptions = [];
 
 	topic = '';
 
 	ngOnInit() {
-		this.quizPackets$ = QuizPackets.find({}).zone().subscribe(packets => {
-			this.quizPackets = packets;
-		})
-		this.tabs$ = QuizPackets.find({})
-			.zone()
-			.map(packets => packets.map(quiz => quiz.topic))
-			.subscribe(tabs => {
-				this.tabs = tabs;
-			})
-		this.quizPacketsSub = MeteorObservable.subscribe('all-quiz-packets').subscribe();
+		this.subscriptions.push(Topics.find({}).zone().subscribe(topics => {
+			this.tabs = topics.map(topic => topic.title);
+		}))
+
+		this.subscriptions.push(QuizPackets.find({}).zone().subscribe(packets => {
+				this.quizPackets = packets;
+		}))
+
+		this.getPackets();
+		this.getTopics();
+	}
+
+	getTopics() {
+		this.subscriptions.push(MeteorObservable.subscribe('topics').subscribe())
+	}
+
+	getPackets() {
+		this.subscriptions.push(MeteorObservable.subscribe('quiz-packets').subscribe())
 	}
 
 	ngOnDestroy() {
-		this.quizPacketsSub.unsubscribe();
+		this.subscriptions.forEach(unsubscribe)
 	}
-
 
 	activeTab = 0;
 

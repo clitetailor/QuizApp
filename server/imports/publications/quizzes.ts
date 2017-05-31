@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { QuizPackets } from '../../../both/collections/quizzes.collection';
+import { PublicQuizPackets } from '../../../both/collections/public-quizzes.collection'
 import { Topics } from '../../../both/collections/topics.collection'
 import { UserResults } from '../../../both/collections/user-results.collection'
 import { Counts } from 'meteor/tmeasday:publish-counts';
@@ -10,10 +11,9 @@ interface Options {
 }
 
 
-// Get list of topics
+
 Meteor.publish('topics', function () {
-	return Topics.find({}).map(topics =>
-		topics.map(topic => topic.title));
+	return Topics.find({});
 })
 
 
@@ -21,10 +21,9 @@ Meteor.publish('topics', function () {
 Meteor.publish('quiz-packets', function (options: Options, topic?: string) {
 	const selector = buildQuery.call(this, null, topic);
 
-	Counts.publish(this, 'quiz-packet-count', QuizPackets.collection.find(selector), { noReady: true });
+	Counts.publish(this, 'quiz-packet-count', PublicQuizPackets.collection.find(selector), { noReady: true });
 
-	return QuizPackets.find(selector, options).map(packets =>
-		packets.map(removeAnswer));
+	return PublicQuizPackets.find(selector, options);
 })
 
 
@@ -61,9 +60,14 @@ Meteor.publish('submit-results', function (packet) {
 })
 
 
+Meteor.publish('submit-packet', function (packet) {
+	return QuizPackets.insert(packet);
+})
+
+
 // Get public packet by id
 Meteor.publish('quiz-packet', function (quizPacketId: string) {
-	return QuizPackets.find(buildQuery.call(this, quizPacketId)).map(removeAnswer);
+	return QuizPackets.find(buildQuery.call(this, quizPacketId));
 })
 
 

@@ -15,7 +15,6 @@ export class QuizEditorComponent implements OnInit {
   }
 
   curQuestion = this.newQuestion();
-
   questions = [this.curQuestion]
 
   newQuestion() {

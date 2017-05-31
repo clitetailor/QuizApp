@@ -40,7 +40,7 @@ export class QuizPageComponent implements OnInit {
 				this.timming = this.quiz.duration * 60;
 			})
 
-		this.quizSub = MeteorObservable.subscribe('all-quiz-packets').subscribe();
+		this.quizSub = MeteorObservable.subscribe('quiz-packets').subscribe();
 
 		setInterval(() => {
 			this.ngZone.run(() => {
@@ -64,7 +64,7 @@ export class QuizPageComponent implements OnInit {
 	}
 
 	chooseAnswer(questionId, answerId) {
-		this.quiz.questions[questionId].answers[answerId].checked = !this.questions[questionId].answers[answerId].checked;
+		this.quiz.questions[questionId].answers[answerId].checked = !this.quiz.questions[questionId].answers[answerId].checked;
 	}
 
 	submit() {
