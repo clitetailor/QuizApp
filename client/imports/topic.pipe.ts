@@ -1,16 +1,15 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'topicPipe'
+	name: 'topicPipe'
 })
 export class TopicPipe implements PipeTransform {
 
-  transform(quizPackets: any[], topic: string): any {
+	transform(packets: any[], topic: string): any {
+		if (topic === null || topic === '' || topic === undefined) {
+			return packets;
+		}
 
-	if (topic === '' || topic === null || topic === undefined) {
-		return quizPackets;
+		return packets.filter(packet => packet.topic.toLowerCase().indexOf(topic.toLowerCase()) !== -1);
 	}
-
-	return quizPackets.filter(packet => packet.topic === topic)
-  }
 }

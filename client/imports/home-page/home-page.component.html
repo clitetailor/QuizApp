@@ -6,7 +6,7 @@
 		</nav>
 
 		<h1>Quiz App</h1>
-		<input type="text" class="search-box" placeholder="Search ...">
+		<input type="text" class="search-box" placeholder="Search ..." name="search" [(ngModel)]="search">
 	</div>
 
 	<div class="content">
@@ -20,7 +20,7 @@
 		</nav>
 
 		<div class="quiz-list">
-			<div class="quiz" *ngFor="let quiz of quizPackets | topicPipe: topic; let i = index" [style.animation-delay.s]="i * 0.2 + 1">
+			<div class="quiz" *ngFor="let quiz of quizPackets | topicPipe: topic | searchPipe: search; let i = index" [style.animation-delay.s]="i * 0.2 + 1">
 				<div class="line">
 					<h3 class="title">{{quiz.title}}</h3>
 				</div>

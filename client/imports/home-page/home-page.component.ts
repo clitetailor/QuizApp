@@ -31,6 +31,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
 	topic = '';
 
+	activeTab = 0;
+	search = '';
+
 	ngOnInit() {
 		this.subscriptions.push(Topics.find({}).zone().subscribe(topics => {
 			this.tabs = topics.map(topic => topic.title);
@@ -56,7 +59,24 @@ export class HomePageComponent implements OnInit, OnDestroy {
 		this.subscriptions.forEach(unsubscribe)
 	}
 
-	activeTab = 0;
+	searchFilter(packets, search) {
+				console.log(packets)
+
+		if (search === '' || search === null || search === undefined) {
+			return packets;
+		}
+
+		return packets.filter(packet => packet.title.toLowerCase.indexOf(search.toLowerCase()) !== -1);
+	}
+
+	topicFilter(packets, topic) {
+		console.log(packets)
+		if (topic === null || topic === '' || topic === undefined) {
+			return packets;
+		}
+
+		return packets.filter(packet => packet.topic.toLowerCase.indexOf(topic.toLowerCase) !== -1);
+	}
 
 	switchTab(i, tab) {
 		if (this.activeTab !== i) {

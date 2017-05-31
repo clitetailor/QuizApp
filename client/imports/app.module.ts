@@ -22,49 +22,51 @@ import { ReportAddComponent } from './report-add/report-add.component';
 import { QuizService } from './quiz.service'
 import { TimePipe } from './time.pipe'
 import { TopicPipe } from './topic.pipe'
+import { SearchPipe } from './search.pipe'
 
 const appRoutes = [
-  { path: '', component: HomePageComponent },
-  { path: 'quiz-info/:id', component: QuizInfoComponent },
-  { path: 'quiz/:id', component: QuizPageComponent },
-  { path: 'editor', component: QuizEditorComponent },
-  { path: 'result', component: QuizResultComponent },
-  { path: 'report', component: ReportManagerComponent },
-  { path: 'report-detail/:id', component: ReportDetailComponent },
-  { path: 'report-edit/:id', component: ReportEditComponent },
-  { path: 'report-add', component:ReportAddComponent},
-  { path: 'login', component: LoginComponent },
-  { path: 'admin', component: AdminPageComponent },
-  { path: 'user', component: UserComponent }
+	{ path: '', component: HomePageComponent },
+	{ path: 'quiz-info/:id', component: QuizInfoComponent },
+	{ path: 'quiz/:id', component: QuizPageComponent },
+	{ path: 'editor', component: QuizEditorComponent },
+	{ path: 'result', component: QuizResultComponent },
+	{ path: 'report', component: ReportManagerComponent },
+	{ path: 'report-detail/:id', component: ReportDetailComponent },
+	{ path: 'report-edit/:id', component: ReportEditComponent },
+	{ path: 'report-add', component: ReportAddComponent },
+	{ path: 'login', component: LoginComponent },
+	{ path: 'admin', component: AdminPageComponent },
+	{ path: 'user', component: UserComponent }
 ]
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomePageComponent,
-    QuizPageComponent,
-    QuizEditorComponent,
-    AdminPageComponent,
-    QuizInfoComponent,
-    QuizResultComponent,
-    ReportManagerComponent,
-    LoginComponent,
-    UserComponent,
-    ReportDetailComponent,
-    ReportEditComponent,
-    ReportAddComponent,
-    UserComponent,
-	TimePipe,
-	TopicPipe
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpModule,
-    RouterModule.forRoot(appRoutes),
-    MaterialModule.forRoot()
-  ],
-  providers: [ReportService, QuizService],
-  bootstrap: [AppComponent]
+	declarations: [
+		AppComponent,
+		HomePageComponent,
+		QuizPageComponent,
+		QuizEditorComponent,
+		AdminPageComponent,
+		QuizInfoComponent,
+		QuizResultComponent,
+		ReportManagerComponent,
+		LoginComponent,
+		UserComponent,
+		ReportDetailComponent,
+		ReportEditComponent,
+		ReportAddComponent,
+		UserComponent,
+		TimePipe,
+		TopicPipe,
+		SearchPipe
+	],
+	imports: [
+		BrowserModule,
+		FormsModule,
+		HttpModule,
+		RouterModule.forRoot(appRoutes),
+		MaterialModule.forRoot()
+	],
+	providers: [ReportService, QuizService],
+	bootstrap: [AppComponent]
 })
 export class AppModule { }
