@@ -5,22 +5,19 @@ import { MeteorObservable } from 'meteor-rxjs'
 export class QuizService {
 	constructor() { }
 
-	quiz;
 	result = 0;
+	numberOfQuestions = 0;
 
-	setResult(quiz) {
-		this.quiz = quiz;
+	setResult(result, num) {
+		this.result = result;
+		this.numberOfQuestions = num;
+	}
 
-		this.result = 0;
+	getResult() {
+		return this.result;
+	}
 
-		for (let question of this.quiz.questions) {
-			let correct = question.answers.reduce((pre, cur) => {
-				return pre && (cur.correct === cur.checked)
-			}, true);
-
-			if (correct) {
-				this.result++;
-			}
-		}
+	getNumberOfQuestions() {
+		return this.numberOfQuestions;
 	}
 }

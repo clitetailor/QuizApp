@@ -1,18 +1,28 @@
-<div class="form-result">
-  <p class="text">
-    Your score:
-  </p>
-  <p class="score"> 105 / 200 </p>
-  <div >
-  <span class="text">
-    <label class="label">Số đáp án đúng : </label>   105 
-    </span>
-  <br>
-  <span class="text">
-    <label class="label">Số đáp án sai : </label>    95 
-    </span>
-  <br>
-  </div>
-  <button class="share" (click)="Share_Result()">Share</button>
+<div class="quiz-result-outer-wrapper">
+	<div class="form-result">
+		<h3>Your score:</h3>
 
+		<div class="line center">
+			<span class="score">{{result.points || 0}} / {{result.numberOfQuestions || 0}}</span>
+		</div>
+
+		<div class="line">
+			<label class="label">Số đáp án đúng:</label> 
+			<span>
+				{{result.points || 0}}
+			</span>
+		</div>
+
+		<div class="line">
+			<label class="label">Số đáp án sai:</label>
+			<span>
+				{{result.numberOfQuestions - result.points || 0}}
+			</span>
+		</div>
+
+		<div class="line">
+				<button md-raised-button (click)="shareResult()">Share</button>
+				<button md-raised-button (click)="back()">Back</button>
+		</div>
+	</div>
 </div>

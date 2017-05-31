@@ -22,9 +22,9 @@ export class QuizInfoComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		this.subscriptions.push(this.route.params.map(params => params['id']).subscribe(_id => {
-			QuizPackets.find({}).zone().subscribe(packets => {
+			this.subscriptions.push(QuizPackets.find({}).zone().subscribe(packets => {
 				this.quiz = packets.find(packet => packet._id === _id)
-			})
+			}))
 
 			this.subscriptions.push(MeteorObservable.subscribe('quiz-packet', _id).subscribe())
 		}))

@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import template from './quiz-page.component.html'
 import { textContent } from './quiz-page.component.styl'
@@ -7,13 +7,14 @@ import { QuizPacket } from '../../../both/models/quiz.model'
 import { Subscription, Observable } from 'rxjs'
 import { MeteorObservable } from 'meteor-rxjs'
 import { QuizService } from '../quiz.service'
+import unsubscribe from '../unsubscribe'
 
 @Component({
 	selector: 'app-quiz-page',
 	template: template,
 	styles: [textContent]
 })
-export class QuizPageComponent implements OnInit {
+export class QuizPageComponent implements OnInit, OnDestroy {
 
 	constructor(
 		private ngZone: NgZone,
@@ -21,32 +22,40 @@ export class QuizPageComponent implements OnInit {
 		private router: Router,
 		private quizService: QuizService) { }
 
-	quizSub;
 	quiz: any = {};
+	subscriptions = [];
 
 	ngOnInit() {
-		this.route.params.map(params => params['id'])
+		this.subscriptions.push(this.route.params.map(params => params['id'])
 			.subscribe(_id => {
-				this.quiz = QuizPackets.findOne({ _id });
-				this.quiz.questions = this.quiz.questions.map(question => {
-					question.answers = question.answers.map(answer => {
-						return Object.assign({}, answer, {
-							checked: false
-						})
-					})
+				this.subscriptions.push(this.route.params.map(params => params['id']).subscribe(_id => {
 
-					return question;
-				});
-				this.timming = this.quiz.duration * 60;
-			})
+					this.subscriptions.push(QuizPackets.find({}).zone().subscribe(packets => {
+						this.quiz = packets.find(packet => packet._id === _id)
 
-		this.quizSub = MeteorObservable.subscribe('quiz-packets').subscribe();
+						if (this.quiz) {
+							this.timming = this.quiz.duration * 60;
+						}
+					}))
 
-		setInterval(() => {
+					this.subscriptions.push(MeteorObservable.subscribe('quiz-packet', _id).subscribe())
+				}))
+			}))
+
+		const interval = setInterval(() => {
 			this.ngZone.run(() => {
+				if (this.timming < 0) {
+					this.submit();
+					clearInterval(interval);
+				}
+
 				this.timming = this.timming - 1
 			})
 		}, 1000);
+	}
+
+	ngOnDestroy() {
+		this.subscriptions.forEach(unsubscribe);
 	}
 
 	timming = 0;
@@ -68,8 +77,10 @@ export class QuizPageComponent implements OnInit {
 	}
 
 	submit() {
-		this.quizService.setResult(this.quiz)
+		this.subscriptions.push(MeteorObservable.call('submit-result', this.quiz).subscribe(result => {
+			this.quizService.setResult(result, this.quiz.questions.length);
 
-		this.router.navigate(['result'])
+			this.router.navigate(['/result'])
+		}))
 	}
 }

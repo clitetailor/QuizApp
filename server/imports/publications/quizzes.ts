@@ -17,12 +17,12 @@ Meteor.publish('topics', function () {
 
 
 // Find quiz packets by topic
-Meteor.publish('quiz-packets', function (options: Options, topic?: string) {
+Meteor.publish('quiz-packets', function (topic?: string) {
 	const selector = buildQuery.call(this, null, topic);
 
 	Counts.publish(this, 'quiz-packet-count', PublicQuizPackets.collection.find(selector), { noReady: true });
 
-	return PublicQuizPackets.find(selector, options);
+	return PublicQuizPackets.find(selector);
 })
 
 
@@ -35,34 +35,8 @@ Meteor.publish('owner-packets', function (options: Options, topic?: string) {
 })
 
 
-// Submit Result
-Meteor.publish('submit-results', function (packet) {
-	const originPacket = QuizPackets.findOne(buildOwnerQuery.call(this, packet._id));
-
-	const points = originPacket.questions.reduce((_points, question, i1) => {
-		const correct = question.answers.reduce((_correct, answer, i2) => {
-			return answer.correct === !!!packet.questions[i1].answers[i2].checked && _correct;
-		}, true);
-
-		return correct ? _points + 1 : _points;
-	}, 0)
-
-	const result = {
-		userId: this.userId,
-		quizId: originPacket._id,
-		points: points
-	}
-
-	UserResults.insert(result)
-
-	return result;
-})
-
-
 Meteor.methods({
 	'submit-packet': function(packet) {
-		console.log('ok')
-
 		const newPacket = Object.assign({}, packet, {
 			time: new Date(),
 			numberOfViews: 0,
@@ -74,6 +48,29 @@ Meteor.methods({
 		}
 
 		return QuizPackets.insert(newPacket);
+	},
+
+	'submit-result': function (packet) {
+		const originPacket = QuizPackets.findOne(buildQuery.call(this, packet._id));
+
+		const points = originPacket.questions.reduce((_points, question, i1) => {
+			const correct = question.answers.reduce((_correct, answer, i2) => {
+				return answer.correct === !!packet.questions[i1].answers[i2].checked && _correct;
+			}, true);
+
+			return correct ? _points + 1 : _points;
+		}, 0)
+
+		const result = {
+			userId: this.userId,
+			quizId: originPacket._id,
+			points: points,
+			numberOfQuestions: originPacket.questions.length
+		}
+
+		UserResults.insert(result)
+
+		return result;
 	}
 })
 
