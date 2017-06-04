@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import { MaterialModule } from '@angular/material'
@@ -19,24 +19,29 @@ import { UserComponent } from './user/user.component';
 import { ReportDetailComponent } from './report-detail/report-detail.component';
 import { ReportEditComponent } from './report-edit/report-edit.component';
 import { ReportAddComponent } from './report-add/report-add.component';
-import { QuizService } from './quiz.service'
-import { TimePipe } from './time.pipe'
-import { TopicPipe } from './topic.pipe'
-import { SearchPipe } from './search.pipe'
-
+import { QuizService } from './quiz.service';
+import { TimePipe } from './time.pipe';
+import { TopicPipe } from './topic.pipe';
+import { SearchPipe } from './search.pipe';
+import { DisplayNamePipe } from './display-name.pipe';
+import { AuthGuard, AuthQuizPacketsGuard, AuthAdminGuard, AuthUsersGuard } from './auth.guard';
+import { AuthService } from './auth.service'; 
+import { SignupComponent } from './signup/signup.component';
 const appRoutes = [
-	{ path: '', component: HomePageComponent },
+	{ path: 'home', component: HomePageComponent },
+	{ path: 'login', component: LoginComponent },
+	{ path: 'signup', component: SignupComponent },
+	{ path: 'admin', component: AdminPageComponent, canActivate: [AuthUsersGuard]},
+	{ path: 'user', component: UserComponent, canActivate: [AuthGuard]},
 	{ path: 'quiz-info/:id', component: QuizInfoComponent },
 	{ path: 'quiz/:id', component: QuizPageComponent },
-	{ path: 'editor', component: QuizEditorComponent },
+	{ path: 'editor', component: QuizEditorComponent, canActivate: [AuthGuard] },
 	{ path: 'result', component: QuizResultComponent },
 	{ path: 'report', component: ReportManagerComponent },
 	{ path: 'report-detail/:id', component: ReportDetailComponent },
 	{ path: 'report-edit/:id', component: ReportEditComponent },
 	{ path: 'report-add', component: ReportAddComponent },
-	{ path: 'login', component: LoginComponent },
-	{ path: 'admin', component: AdminPageComponent },
-	{ path: 'user', component: UserComponent }
+	{ path: '', redirectTo: '/home', pathMatch: 'full'}
 ]
 
 @NgModule({
@@ -55,18 +60,21 @@ const appRoutes = [
 		ReportEditComponent,
 		ReportAddComponent,
 		UserComponent,
+		SignupComponent,
 		TimePipe,
 		TopicPipe,
-		SearchPipe
+		SearchPipe,
+		DisplayNamePipe
 	],
 	imports: [
 		BrowserModule,
 		FormsModule,
+		ReactiveFormsModule,
 		HttpModule,
 		RouterModule.forRoot(appRoutes),
-		MaterialModule.forRoot()
+		MaterialModule
 	],
-	providers: [ReportService, QuizService],
+	providers: [ReportService, QuizService, AuthGuard, AuthQuizPacketsGuard, AuthUsersGuard, AuthAdminGuard, AuthService ],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }

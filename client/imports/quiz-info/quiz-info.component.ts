@@ -8,7 +8,8 @@ import { Subscription, Observable } from 'rxjs'
 import { MeteorObservable } from 'meteor-rxjs'
 import { QuizService } from '../quiz.service'
 import unsubscribe from '../unsubscribe'
-
+import { UserResults } from '../../../both/collections/user-results.collection'; 
+import { UserResult } from '../../../both/models/user-result.model';
 @Component({
 	selector: 'app-quiz-info',
 	template: template,
@@ -19,7 +20,8 @@ export class QuizInfoComponent implements OnInit, OnDestroy {
 	constructor(private route: ActivatedRoute, private router: Router) { }
 
 	subscriptions = []
-
+	resultSub : Subscription;
+	results: Observable<UserResult[]>;
 	ngOnInit() {
 		this.subscriptions.push(this.route.params.map(params => params['id']).subscribe(_id => {
 			this.subscriptions.push(QuizPackets.find({}).zone().subscribe(packets => {
@@ -28,13 +30,24 @@ export class QuizInfoComponent implements OnInit, OnDestroy {
 
 			this.subscriptions.push(MeteorObservable.subscribe('quiz-packet', _id).subscribe())
 		}))
+		this.resultSub = MeteorObservable.subscribe('results').subscribe(()=> {
+			console.log('results');
+			console.log(this.quiz._id);
+			MeteorObservable.autorun().subscribe(()=>{
+				console.log(this.quiz._id);
+				this.results = UserResults.find({quizId: this.quiz._id});
+				console.log('tim');
+				console.log(this.results);
+			})
+		})
 	}
 
 	ngOnDestroy() {
-		this.subscriptions.forEach(unsubscribe)
+		this.subscriptions.forEach(unsubscribe);
+		this.resultSub.unsubscribe();
 	}
 
-	quiz: any = {};
+	quiz: QuizPacket;
 
 	users = [{
 		username: "Clite Tailor",

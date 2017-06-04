@@ -1,0 +1,9 @@
+
+<div class="signup-main">
+    <h1>Sign up</h1>
+    <form class="form" #f="ngForm" (ngSubmit)="signup()" [formGroup]= "signupForm">
+        <input type="text" class="username" name= "username" formControlName="username" placeholder="Username" >
+        <input type="password" class="password" name="password" formControlName="password" placeholder="Password" >
+        <input type="submit" value="Sign up">
+    </form>
+</div>

@@ -14,6 +14,7 @@ import unsubscribe from '../unsubscribe'
 	template: template,
 	styles: [textContent]
 })
+
 export class QuizPageComponent implements OnInit, OnDestroy {
 
 	constructor(
@@ -79,8 +80,9 @@ export class QuizPageComponent implements OnInit, OnDestroy {
 	submit() {
 		this.subscriptions.push(MeteorObservable.call('submit-result', this.quiz).subscribe(result => {
 			this.quizService.setResult(result, this.quiz.questions.length);
-
-			this.router.navigate(['/result'])
-		}))
+			this.quizService.setUser(Meteor.userId());
+			this.quizService.setQuiz(this.quiz);
+			this.router.navigate(['/result']);
+		}));
 	}
 }

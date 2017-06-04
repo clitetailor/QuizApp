@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy} from '@angular/core';
+import template from './user.component.html';
+import { textContent } from './user.component.styl';
 
 @Component({
   selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.styl']
+  template,
+  styles: [textContent]
 })
-export class UserComponent {
+export class UserComponent implements OnDestroy, OnInit{
 
   username: string;
   name:string;
@@ -13,9 +15,16 @@ export class UserComponent {
   cofpassword:string;
   email:string;
   avatar :string;
+  
+  ngOnInit(){
 
+  }
   onSubmit(){
     if(this.password==this.cofpassword)
     console.log(this.name,this.username,this.password,this.email,this.avatar);
+  }
+
+  ngOnDestroy(){
+    
   }
 }

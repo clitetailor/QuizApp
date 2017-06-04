@@ -1,15 +1,23 @@
 <div class="home-page-outer-wrapper">
 	<div class="cover">
-		<nav>
-			<a href="">Login</a>
-			<a href="">Signup</a>
+		<nav> 
+			<div *ngIf="user">
+				<a >{{user.username}}</a>
+				<a (click)= logout()><button md-raised-button color="primary">Log out</button></a>
+			</div>
+			<div *ngIf="!user">
+				<a [routerLink]="['/login']">Log in</a>
+				<a [routerLink]="['/signup']">Sign up</button></a>
+			</div>
 		</nav>
-
+		
+		
 		<h1>Quiz App</h1>
 		<input type="text" class="search-box" placeholder="Search ..." name="search" [(ngModel)]="search">
 	</div>
+	
 
-	<div class="content">
+	<div class="home-page-content">
 		<nav class="tabs">
 			<div class="tab" [class.active]="activeTab === 0" (click)="switchTab(0, null)">
 				<a>All</a>

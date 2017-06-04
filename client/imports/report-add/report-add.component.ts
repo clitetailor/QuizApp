@@ -30,4 +30,7 @@ export class ReportAddComponent implements OnInit {
      }
      })
   }
+  GotoReport(){
+    this.router.navigate(['/'])
+  }
 }

@@ -10,6 +10,7 @@ import { Subscription, Observable } from 'rxjs'
 import { MeteorObservable } from 'meteor-rxjs'
 import { QuizService } from '../quiz.service'
 import unsubscribe from '../unsubscribe'
+import { InjectUser } from 'angular2-meteor-accounts-ui';
 
 interface Options {
 	[key: string]: any
@@ -20,13 +21,14 @@ interface Options {
 	template: template,
 	styles: [textContent]
 })
+
+@InjectUser('user')
 export class HomePageComponent implements OnInit, OnDestroy {
 
 	constructor(private router: Router) { }
 
 	quizPackets;
 	tabs;
-	
 	subscriptions = [];
 
 	topic = '';
@@ -45,8 +47,11 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
 		this.getPackets();
 		this.getTopics();
+		console.log(Meteor.user());
 	}
-
+	getUser(){
+		return (Meteor.user()==null)
+	}
 	getTopics() {
 		this.subscriptions.push(MeteorObservable.subscribe('topics').subscribe())
 	}
@@ -88,4 +93,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
 	start(quiz) {
 		this.router.navigate([`quiz-info/${quiz._id}`])
 	}
+	logout(){
+        Meteor.logout();
+    }
 }

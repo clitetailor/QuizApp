@@ -60,17 +60,35 @@ Meteor.methods({
 
 			return correct ? _points + 1 : _points;
 		}, 0)
-
 		const result = {
 			userId: this.userId,
 			quizId: originPacket._id,
 			points: points,
-			numberOfQuestions: originPacket.questions.length
+			numberOfQuestions: originPacket.questions.length,
+			public: false
 		}
 
-		UserResults.insert(result)
+		UserResults.insert(result);
+		console.log('insert ok');
 
 		return result;
+	},
+
+	'share-result': function(packet){
+		const originPacket = QuizPackets.findOne(buildQuery.call(this, packet._id));
+		check(this.userId, String);
+		check(originPacket._id, String);
+		
+		UserResults.update({
+			userId: Meteor.userId(),
+			quizId: originPacket._id
+		},
+		{
+			$set: {
+				public: true
+			}
+		});
+		console.log('share ok');
 	}
 })
 

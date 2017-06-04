@@ -1,14 +1,38 @@
-<div class="outer-wrapper">
 
+<div class="admin-outer-wrapper">
+    <div [hidden]="!user" style="float: right">
+        <span>{{user.username}}</span>
+        <button (click)="logout()">Logout</button>
+    </div>
     <div class="members">
-        <h2>Members:</h2>
-        <div class="member" *ngFor="let member of members">
+        <h2>Users:</h2>
+        <div class="member" *ngFor="let user of users | async">
             <div class="line">
-                <h4>Id: {{member.id}}</h4>
+                <h4>Id: {{user._id}}</h4>
             </div>
 
             <div class="line">
-                name: {{member.name}}
+                name: {{user.username}}
+            </div>
+
+            <div class="line">
+                <!-- Ví dụ chúng ta có nút thêm editor ở đây -->
+
+                <!-- Giờ chúng ta sẽ implement chức năng thêm editor vào đây -->
+                <button md-raised-button color="warn" (click)="addMember(user)">Add Member</button>
+                <button md-raised-button color="warn" (click)="removeMember(user)">Remove Member</button>
+            </div>
+        </div>
+    </div>
+    <div class="members">
+        <h2>Members:</h2>
+        <div class="member" *ngFor="let member of members | async">
+            <div class="line">
+                <h4>Id: {{member._id}}</h4>
+            </div>
+
+            <div class="line">
+                name: {{member.username}}
             </div>
 
             <div class="line">
@@ -25,9 +49,9 @@
 
     <div class="editors">
         <h2>Editors:</h2>
-        <div class="editor" *ngFor="let editor of editors">
+        <div class="editor" *ngFor="let editor of editors | async">
             <div class="line">
-                <h3>{{editor}}</h3>
+                <h3>{{editor.username}}</h3>
             </div>
 
 

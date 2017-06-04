@@ -88,7 +88,8 @@ export class QuizEditorComponent implements OnInit {
 			title: this.title,
 			duration: this.duration
 		}).subscribe(() => {
-			this.router.navigate(['/'])
+      window.alert('Tạo thành công');
+			this.router.navigate(['/']);
 		})
   }
 }
