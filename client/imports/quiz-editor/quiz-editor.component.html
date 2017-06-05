@@ -1,4 +1,17 @@
 <div class="quiz-editor-outer-wrapper">
+	<div class= "nav-bar">
+		<h1>Quiz App</h1>
+		<nav>
+		<div *ngIf="user">
+			<a >{{user.username}}</a>
+			<a (click)= logout()><button md-raised-button color="primary">Log out</button></a>
+		</div>
+		<div *ngIf="!user">
+			<a [routerLink]="['/login']">Log in</a>
+			<a [routerLink]="['/signup']">Sign up</button></a>
+		</div>
+		</nav>
+	</div>
 	<div class="display">
 		<div class="paper">
 			<div class="piece" *ngFor="let question of questions; let i = index" (click)="chooseQuestion(i)">

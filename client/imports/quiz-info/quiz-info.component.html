@@ -1,15 +1,25 @@
 <div class="quiz-info-outer-wrapper">
-  <nav class="nav-bar">
-    <h1 class="title">Quiz App</h1>
-  </nav>
-
+  <div class= "nav-bar">
+    <h1>Quiz App</h1>
+    <nav>
+      <div *ngIf="user">
+        <a >{{user.username}}</a>
+        <a (click)= logout()><button md-raised-button color="primary">Log out</button></a>
+      </div>
+      <div *ngIf="!user">
+        <a [routerLink]="['/login']">Log in</a>
+        <a [routerLink]="['/signup']">Sign up</button></a>
+      </div>
+    </nav>
+  </div>
+  
   <div class="card">
     <div class="line">
       <h3 class="title">{{quiz?.title}}</h3>
     </div>
 
     <div class="line">
-      <b>Ngày tạo:</b> &nbsp; {{quiz?.duration | date: "dd/MM/yyyy"}}
+      <b>Ngày tạo:</b> &nbsp; {{quiz?.time | date: "dd/MM/yyyy"}}
     </div>
 
     <div class="line" *ngIf="quiz?.author">
@@ -33,7 +43,7 @@
   <div class="item-list">
     <div class="item" *ngFor="let result of results | async">
       <div class="line">
-        <h3 class="title">&nbsp;&nbsp;&nbsp;&nbsp; {{result.userId }}</h3>
+        <h3 class="title">{{getUsername(result.userId) }}</h3>
       </div>
 
       <div class="line">

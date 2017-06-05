@@ -1,4 +1,14 @@
 <div class="quiz-page-outer-wrapper">
+	<div *ngIf="user" class="timer" float="right">
+		<a >{{user.username}}</a>
+		<a (click)= logout()><button md-raised-button color="primary">Log out</button></a>
+	</div>
+	<div *ngIf="!user" class="timer" float="right">
+		<a [routerLink]="['/login']">Log in</a>
+		<a [routerLink]="['/signup']">Sign up</button></a>
+	</div>
+	</br>
+	</br>
 	<div class="timer">
 		{{timmingHours}}:{{timmingMinutes | number: "2.0-0"}}:{{timmingSeconds | number: "2.0-0"}}
 	</div>
@@ -34,7 +44,20 @@
 				<button md-raised-button color="warn" (click)="submit()">Submit</button>
 			</div>
 		</div>
+		<div class="piece">
+			<h3>Report </h3>
+			<div *ngIf="details">
+				{{ details }}
+			</div>
+			<form class="form" #f="ngForm" (ngSubmit)="report()" [formGroup]=reportForm>
+				<textarea rows="10" cols="35" name="content" formControlName="content"></textarea>
+				<button md-raised-button color="warn" type="submit">Send</button>
+			</form>
+		</div>
+		
 	</div>
+	
+ 	
 
 
 </div>

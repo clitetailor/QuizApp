@@ -3,12 +3,14 @@ import template from './quiz-editor.component.html'
 import { textContent } from './quiz-editor.component.styl'
 import { MeteorObservable } from 'meteor-rxjs'
 import { Router } from '@angular/router';
-
+import { InjectUser } from 'angular2-meteor-accounts-ui';
 @Component({
   selector: 'app-quiz-editor',
   template: template,
   styles: [textContent]
 })
+
+@InjectUser('user')
 export class QuizEditorComponent implements OnInit {
 
   constructor(private router: Router) { }
@@ -92,4 +94,8 @@ export class QuizEditorComponent implements OnInit {
 			this.router.navigate(['/']);
 		})
   }
+  logout(){
+		Meteor.logout();
+		this.router.navigate(['/']);
+	}
 }

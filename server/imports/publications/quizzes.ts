@@ -4,6 +4,7 @@ import { PublicQuizPackets } from '../../../both/collections/public-quizzes.coll
 import { Topics } from '../../../both/collections/topics.collection'
 import { UserResults } from '../../../both/collections/user-results.collection'
 import { Counts } from 'meteor/tmeasday:publish-counts';
+import { Reports } from '../../../both/collections/reports.collections';
 import removeAnswer from './quizzes/remove-answers'
 
 interface Options {
@@ -89,6 +90,19 @@ Meteor.methods({
 			}
 		});
 		console.log('share ok');
+	},
+	'report-packet': function(packetId, content){
+
+		const reportedPacket = QuizPackets.findOne(buildQuery.call(this, packetId));
+		check(reportedPacket._id, String);
+		check(content, String);
+		const report = {
+			quizId: reportedPacket._id,
+			content: content,
+			createdAt: new Date(Date.now())
+		}
+		Reports.insert(report);
+		console.log('report successful');
 	}
 })
 

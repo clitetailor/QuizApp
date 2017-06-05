@@ -1,37 +1,33 @@
-<div class="outer-wrapper">
-  <div class="row">
-    <div class="col-md-12">
-      <div align="right" class="col-md-4">
-        <input type="text" name="keyword" [(ngModel)]="keyword" />
-        <button class="btn btn-info" (click)="Search()">Search</button>
+<div class="report-outer-wrapper">
+  <div class= "nav-bar">
+    <h1>Report Center</h1>
+    <nav>
+      <div *ngIf="user">
+        <a >{{user.username}}</a>
+        <a (click)= logout()><button md-raised-button color="primary">Log out</button></a>
+        <a (click)= gotoCenter()><button md-raised-button color="primary">User center</button></a>
       </div>
-    </div>
+      
+    </nav>
   </div>
+  <div class="members">
+        <div class="member" *ngFor="let report of reports | async">
+            <div class="line">
+                <h4>Id: {{report._id}}</h4>
+            </div>
 
-  <div class="row" align="center">
-    <a [routerLink]="['/report-add']" class="btn btn-success">Add New</a>
-  </div>
-  <table class="table table-bordered">
-    <thead>
-      <tr class="info">
-        <td>Id</td>
-        <td>Name Quize</td>
-        <td>Content Report</td>
-        <td>Show Detail</td>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let report of reports">
-        <td>{{report.id}}</td>
-        <td>{{report.name_quize}}</td>
-        <td>{{report.content_report}}</td>
-        <td>
-          <a [routerLink]="['/report-detail',report.id]">Show Detail</a>
-          <a [routerLink]="['/report-edit',report.id]" class="btn btn-primary">Edit</a>
-          <button (click)="Delete(report.id)" class="btn btn-danger">Delete</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+            <div class="line">
+                QuizId: {{report.quizId}}
+            </div>
+            <div class="line">
+                Content: {{report.content}}
+            </div>
+            <div class="line">
+                Time:{{report.createdAt | date: "dd/MM/yyyy"}}
+            </div>
+        </div>
+    </div>
+ 
 
 </div>
+

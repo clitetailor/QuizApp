@@ -123,4 +123,7 @@ export class AdminPageComponent implements OnInit, OnDestroy {
       Meteor.logout();
       this.router.navigate(['/login']);
   }
+  gotoReport(){
+    this.router.navigate(['/report']);
+  }
 }

@@ -8,7 +8,7 @@ import './imports/publications/quizzes'
 import './imports/publications/users';
 import './imports/publications/roles';
 import './imports/publications/share-result';
-
+import './imports/publications/reports';
 Meteor.startup(() => {
 	loadQuizzes();
 	loadUsers();

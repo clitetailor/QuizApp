@@ -11,6 +11,9 @@ Meteor.publish('results', function () {
     return UserResults.find(buildQueryResult.call(this));
 	
 })
+Meteor.publish('my-results', function(){
+    return UserResults.find(buildQueryMyResult.call(this));
+})
 function buildQueryResult(){
     const isResultShared = 
         
@@ -19,4 +22,10 @@ function buildQueryResult(){
             }
    
     return isResultShared;
+}
+function buildQueryMyResult(){
+    const isMyResult = {
+        userId: this.userId
+    }
+    return isMyResult;
 }

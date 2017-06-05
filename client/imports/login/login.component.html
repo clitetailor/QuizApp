@@ -4,6 +4,12 @@
         <form class="form" #f="ngForm" (ngSubmit)="checkLogin()" [formGroup]= "loginForm">
             <input type="text" class="username" name= "username" formControlName="username" placeholder="Username" >
             <input type="password" class="password" name="password" formControlName="password" placeholder="Password" >
+            <div class="form-group">
+                <a [routerLink]="['/signup']">Tạo tài khoản</a>
+            </div>
             <input type="submit" value="LOG IN">
+            <div [hidden]="error == ''">
+                <p >{{ error }}</p>
+            </div>
         </form>
     </div>

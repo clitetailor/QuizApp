@@ -1,0 +1,18 @@
+<div class="user-outer-wrapper">
+    <nav [hidden]="!user" style="float: right">
+        <span>{{user.username}}</span>
+        <button md-raised-button color="warn" (click)="logout()">Logout</button>
+        <a ><button md-raised-button color="warn" (click)="gotoHome()">Home</button></a>
+    </nav>
+    <div class="members">
+        <h2>Gói câu hỏi đã trả lời:</h2>
+        <div class="member" *ngFor="let quiz of results | async">
+            <div class="line">
+                <h4>Gói câu hỏi: {{getQuizTitle(quiz.quizId)}}</h4>
+            </div>
+
+            <div class="line">
+                Điểm: {{quiz.points}} / {{quiz.numberOfQuestions}}
+            </div>
+        </div>
+    </div>

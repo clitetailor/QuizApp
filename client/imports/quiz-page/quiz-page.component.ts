@@ -8,24 +8,28 @@ import { Subscription, Observable } from 'rxjs'
 import { MeteorObservable } from 'meteor-rxjs'
 import { QuizService } from '../quiz.service'
 import unsubscribe from '../unsubscribe'
-
+import { InjectUser } from 'angular2-meteor-accounts-ui';
+import { ReportService } from '../report.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
 	selector: 'app-quiz-page',
 	template: template,
 	styles: [textContent]
 })
-
+@InjectUser('user')
 export class QuizPageComponent implements OnInit, OnDestroy {
 
 	constructor(
 		private ngZone: NgZone,
 		private route: ActivatedRoute,
 		private router: Router,
-		private quizService: QuizService) { }
+		private quizService: QuizService,
+		private reportService: ReportService,
+		private formBuilder: FormBuilder) { }
 
 	quiz: any = {};
 	subscriptions = [];
-
+	reportForm: FormGroup;
 	ngOnInit() {
 		this.subscriptions.push(this.route.params.map(params => params['id'])
 			.subscribe(_id => {
@@ -53,6 +57,10 @@ export class QuizPageComponent implements OnInit, OnDestroy {
 				this.timming = this.timming - 1
 			})
 		}, 1000);
+		this.reportForm = this.formBuilder.group({
+			content: ['', Validators.required]
+			
+		})
 	}
 
 	ngOnDestroy() {
@@ -83,6 +91,19 @@ export class QuizPageComponent implements OnInit, OnDestroy {
 			this.quizService.setUser(Meteor.userId());
 			this.quizService.setQuiz(this.quiz);
 			this.router.navigate(['/result']);
+		}));
+	}
+	logout(){
+		Meteor.logout();
+		this.router.navigate(['/']);
+	}
+	details: string;
+	
+	report(){
+		this.details = 'Sending Report...';
+		this.reportService.setQuizId(this.quiz._id);
+		this.subscriptions.push(MeteorObservable.call('report-packet', this.quiz._id, this.reportForm.value.content).subscribe(report=>{
+			this.details= "Report Sent";
 		}));
 	}
 }

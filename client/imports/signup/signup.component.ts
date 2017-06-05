@@ -7,11 +7,15 @@ import { Accounts } from 'meteor/accounts-base';
 import { Roles } from 'meteor/alanning:roles';
 import { textContent } from './signup.component.styl';
 import template from './signup.component.html';
+import { InjectUser } from 'angular2-meteor-accounts-ui';
+
+
 @Component({
   selector: 'signup',
   template,
   styles: [textContent]
 })
+@InjectUser('user')
 export class SignupComponent implements OnInit {
   signupForm: FormGroup;
   error: string;

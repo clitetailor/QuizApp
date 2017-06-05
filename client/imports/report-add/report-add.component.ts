@@ -1,36 +1,44 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { ReportService } from '../services/report.service';
-import template from './report-add.component.html'
-import { textContent } from './report-add.component.styl'
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import template from './report-add.component.html';
+import { Subscription, Observable } from 'rxjs'
+import { MeteorObservable } from 'meteor-rxjs'
+import { ReportService } from '../report.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-report-add',
-  template: template,
-  styles: [textContent]
+    template,
+    styles: []
 })
-export class ReportAddComponent implements OnInit {
- public _id : number;
-  public report :any;
- 
-  constructor(
-     private router: Router, private activatedRoute: ActivatedRoute,
-       public reportService: ReportService)
-  {}
 
-  ngOnInit() {
-  this.report={};
+export class ReportAddComponent {
+  details: string;
+  reportForm: FormGroup;
+  sending: boolean = false;
+  reportsub: Subscription;
+  constructor(private router: Router,private formBuilder: FormBuilder, private reportService: ReportService) {}
+  ngOnInit(){
+    this.reportForm = this.formBuilder.group({
+      content: ['', Validators.required]
+      
+    })
   }
-  SaveForm(){
-     this.reportService.Add(this.report).subscribe(response=> {
-     if(response){
-         alert("Add Report Success !!!");
-            this.router.navigate(['report']);
+  send() {
+    this.sending = true;
+    this.details = 'Sending Report...';
+    this.reportsub = MeteorObservable.call('report-packet', this.reportService.getQuizId(), this.reportForm.value.content).subscribe(report=>{
+      this.closePopup();
+    })
+    
+  }
 
-     }
-     })
+  cancel() {
+    this.closePopup();
   }
-  GotoReport(){
-    this.router.navigate(['/'])
+
+  closePopup() {
+    // Providing a `null` value to the named outlet
+    // clears the contents of the named outlet
+    this.router.navigate([{ outlets: { popup: null }}]);
   }
 }

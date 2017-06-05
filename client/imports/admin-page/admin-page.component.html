@@ -1,9 +1,15 @@
 
 <div class="admin-outer-wrapper">
-    <div [hidden]="!user" style="float: right">
-        <span>{{user.username}}</span>
-        <button (click)="logout()">Logout</button>
-    </div>
+    <div class= "nav-bar">
+        <h1>User Center</h1>
+        <nav [hidden]="!user">
+            <span>{{user.username}}</span>
+            <button md-raised-button color="warn" (click)="logout()">Logout</button>
+            <a ><button md-raised-button color="warn" (click)="gotoReport()">Report Center</button></a>
+        </nav>
+       
+  </div>
+    
     <div class="members">
         <h2>Users:</h2>
         <div class="member" *ngFor="let user of users | async">

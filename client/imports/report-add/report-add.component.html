@@ -1,4 +1,4 @@
-<form  class="form" #f="ngForm" (ngSubmit)="SaveForm()">
+<!--<form  class="form" #f="ngForm" (ngSubmit)="SaveForm()" [formGroup]="reportForm">
   <div class="form-group">
     <label class="col-md-2">Name Quize</label>
     <div class="col-md-10"><input type="text" name="name_quize" [(ngModel)]="report.name_quize" /></div>
@@ -12,3 +12,28 @@
     <button type="button" (click)="GotoReport()">Cancel</button>
   </div>
 </form>
+<div class="login-main">
+    <h2>Report Here</h2>
+    <form class="form" #f="ngForm" (ngSubmit)="checkLogin()" [formGroup]= "loginForm">
+        <input type="text" class="username" name= "username" formControlName="username" placeholder="Username" >
+        <input type="password" class="password" name="password" formControlName="password" placeholder="Password" >
+        <div class="form-group">
+            <a [routerLink]="['/signup']">Tạo tài khoản</a>
+        </div>
+        <input type="submit" value="LOG IN">
+        <div [hidden]="error == ''">
+            <p >{{ error }}</p>
+        </div>
+    </form>
+</div>-->
+<div class= "container" style="float: center"> 
+<h3>Report  Center</h3>
+<div *ngIf="details">
+  {{ details }}
+</div>
+<form class="form" #f="ngForm" (ngSubmit)="report()" [formGroup]=reportForm>
+  <textarea rows="10" cols="35" name="content" formControlName="content"></textarea>
+  <button type="submit">Send</button>
+  <button (click)="cancel()">Cancel</button>
+</form>
+</div>

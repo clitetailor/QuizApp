@@ -24,7 +24,7 @@ interface Options {
 
 @InjectUser('user')
 export class HomePageComponent implements OnInit, OnDestroy {
-
+	user: Meteor.User;
 	constructor(private router: Router) { }
 
 	quizPackets;
@@ -94,6 +94,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
 		this.router.navigate([`quiz-info/${quiz._id}`])
 	}
 	logout(){
-        Meteor.logout();
-    }
+		Meteor.logout();
+		this.router.navigate(['/']);
+	}
 }

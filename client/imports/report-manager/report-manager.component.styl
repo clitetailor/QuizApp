@@ -1,15 +1,95 @@
-.outer-wrapper
+
+ /*
+*::-webkit-scrollbar-track
+  background alpha(#000, 0.1)
+
+
+*::-webkit-scrollbar-thumb
+  background #aaa
+*/
+
+.report-outer-wrapper
+  display flex
+
   width 100%
   height 100%
+  background #eee
 
-  margin 0
-  padding 0
+  font-family Lato
 
-  overflow-y auto
-  overflow-x hidden
+  .nav-bar
+    position fixed
+    top 0
+    left 0
+    right 0
 
-  a
-  .link
-      color: green
-      background-color: transparent
-      text-decoration: none
+    display flex
+    flex-flow column nowrap
+    justify-content center
+    align-items center
+
+    background linear-gradient(45deg, dodgerblue, purple)
+    background-attachment fixed
+
+    height 60px
+    width 100%
+
+    box-shadow 0 2px 4px #eee
+    
+    nav
+      display flex
+      align-items center
+      justify-content flex-end
+
+      padding 0 20px
+
+      position absolute
+      top 0
+      left 0
+      right 0
+
+      height 60px
+
+      a
+        margin 0 20px
+
+        color white
+        font-family "Lato Medium"
+        font-size 14px
+
+    h1
+      font-family Lato Medium
+      font-size 30px
+      color white
+      
+
+
+  .members
+    flex 0 0 auto
+    padding 20px
+
+    width 80%
+    overflow-y auto
+
+    border-right 1px solid #ddd
+
+    .member
+      padding 20px
+      margin 30px auto
+
+      background white
+      border-radius 3px
+
+  .editors
+    flex 0 0 auto
+    padding 20px
+
+    width 30%
+    overflow-y auto
+
+    .editor
+      padding 20px
+      margin 30px auto
+
+      background white
+      border-radius 3px
